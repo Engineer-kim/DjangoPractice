@@ -1,11 +1,11 @@
 from codecs import replace_errors
 from http.client import responses
+from idlelib.rpc import response_queue
 
 from django.urls import reverse
 
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotFound ,HttpResponseRedirect
-from django.template.loader import render_to_string
+from django.http import HttpResponse, Http404, HttpResponseNotFound ,HttpResponseRedirect
 
 monthly_challenges = {
     "january": "This January",
@@ -52,4 +52,5 @@ def monthly_challenge(request , month):
             "month_name": month,
         })
     except:
-        return HttpResponseNotFound("<h1>This is not a valid month</h1>")
+        raise Http404("Monthly Challenge Not Found")
+
